@@ -1,0 +1,25 @@
+{
+  "name": "klaytn-makers-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/justwaves/klaytn-makers-server.git",
+  "author": "uijin <justwaves@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "eslint-config-prettier": "^6.10.1",
+    "esm": "^3.2.25",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^8.0.8",
+    "mongoose": "^5.9.7"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "start": "node -r esm src/app.js",
+    "dev": "nodemon --watch src/ -r esm src/app.js"
+  }
+}
