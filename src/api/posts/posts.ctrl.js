@@ -1,8 +1,33 @@
 import Post from "../../models/post";
 import mongoose from "mongoose";
 import Joi from "joi";
+import sanitizeHtml from "sanitize-html";
 
 const { ObjectId } = mongoose.Types;
+
+const sanitizeOption = {
+  allowedTags: [
+    "h1",
+    "h2",
+    "b",
+    "i",
+    "u",
+    "s",
+    "p",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "a",
+    "img",
+  ],
+  allowedAttributes: {
+    a: ["href", "name", "target"],
+    img: ["src"],
+    li: ["class"],
+  },
+  allowedSchemes: ["data", "http"],
+};
 
 export const getPostById = async (ctx, next) => {
   const { id } = ctx.params;
@@ -33,6 +58,13 @@ export const checkOwnPost = (ctx, next) => {
   return next();
 };
 
+const removeHtmlAndShorten = body => {
+  const filtered = sanitizeHtml(body, {
+    allowedTags: [],
+  });
+  return filtered.length < 200 ? filtered : `${filtered.slice(0, 200)}...`;
+};
+
 // 포스트 작성
 export const write = async ctx => {
   // Joi validate
@@ -51,7 +83,7 @@ export const write = async ctx => {
   const { title, body, tags } = ctx.request.body;
   const post = new Post({
     title,
-    body,
+    body: sanitizeHtml(body, sanitizeOption),
     tags,
     user: ctx.state.user,
   });
@@ -90,8 +122,7 @@ export const list = async ctx => {
     ctx.set("Last-Page", Math.ceil(postCount / 10));
     ctx.body = posts.map(post => ({
       ...post,
-      body:
-        post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+      body: removeHtmlAndShorten(post.body),
     }));
   } catch (e) {
     ctx.throw(500, e);
@@ -122,6 +153,7 @@ export const update = async ctx => {
     body: Joi.string(),
     tags: Joi.array().items(Joi.string()),
   });
+
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400;
@@ -130,8 +162,16 @@ export const update = async ctx => {
   }
 
   const { body } = ctx.request;
+
+  const nextData = { ...ctx.request.body };
+  if (nextData.body) {
+    nextData.body = sanitizeHtml(nextData.body);
+  }
+
   try {
-    const post = await Post.findByIdAndUpdate(id, body, { new: true }).exec();
+    const post = await Post.findByIdAndUpdate(id, nextData, {
+      new: true,
+    }).exec();
     if (!post) {
       ctx.status = 404; // Not Found
       return;
