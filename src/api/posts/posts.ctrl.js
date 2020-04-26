@@ -68,25 +68,55 @@ const removeHtmlAndShorten = body => {
 // 포스트 작성
 export const write = async ctx => {
   // Joi validate
-  const schema = Joi.object().keys({
-    title: Joi.string().required(),
-    body: Joi.string().required(),
-    tags: Joi.array().items(Joi.string()).required(),
-  });
-  const result = Joi.validate(ctx.request.body, schema);
-  if (result.error) {
-    ctx.status = 400;
-    ctx.body = result.error;
-    return;
-  }
+  // const schema = Joi.object().keys({
+  //   title: Joi.string().required(),
+  //   body: Joi.string().required(),
+  //   tags: Joi.array().items(Joi.string()).required(),
+  //   tokenId: Joi.number().required(),
+  //   description: Joi.string().required(),
+  //   photo: Joi.string().required(),
+  //   price: Joi.number().required(),
+  //   targetCount: Joi.number().required(),
+  //   dDay: Joi.string().required(),
+  //   buyers: Joi.array().items(Joi.string()),
+  //   count: Joi.number(),
+  //   status: Joi.number(),
+  // });
 
-  const { title, body, tags } = ctx.request.body;
+  // const result = Joi.validate(ctx.request.body, schema);
+  // if (result.error) {
+  //   ctx.status = 400;
+  //   ctx.body = result.error;
+  //   return;
+  // }
+
+  const {
+    title,
+    body,
+    tags,
+    description,
+    photo,
+    price,
+    targetCount,
+    dDay,
+  } = ctx.request.body;
+
+  const postCount = await Post.countDocuments().exec();
+
   const post = new Post({
     title,
-    body: sanitizeHtml(body, sanitizeOption),
+    // body: sanitizeHtml(body, sanitizeOption),
+    body,
     tags,
     user: ctx.state.user,
+    tokenId: postCount + 1,
+    description,
+    photo,
+    price,
+    targetCount,
+    dDay,
   });
+
   try {
     await post.save();
     ctx.body = post;

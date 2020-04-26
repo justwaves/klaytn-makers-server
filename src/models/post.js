@@ -14,6 +14,15 @@ const PostSchema = new Schema({
     _id: mongoose.Types.ObjectId,
     username: String,
   },
+  tokenId: Number,
+  description: String,
+  photo: String,
+  price: Number,
+  targetCount: Number,
+  dDay: String,
+  buyers: [String],
+  count: Number,
+  status: Number,
 });
 
 const Post = mongoose.model("Post", PostSchema);
