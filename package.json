@@ -6,6 +6,13 @@
   "author": "uijin <justwaves@naver.com>",
   "license": "MIT",
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/runtime": "^7.9.2",
+    "babel-node": "^0.0.1-security",
     "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "eslint-config-prettier": "^6.10.1",
@@ -23,7 +30,8 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
-    "start": "node -r esm src/app.js",
-    "dev": "nodemon --watch src/ -r esm src/app.js"
+    "start": "node build/app.js",
+    "dev": "nodemon --watch src/ -r esm src/app.js",
+    "build": "babel src -d build"
   }
 }
