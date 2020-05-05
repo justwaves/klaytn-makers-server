@@ -18,6 +18,7 @@ export const write = async ctx => {
     transactionHash: Joi.string(),
     typeName: Joi.string(),
     klay: Joi.number(),
+    TxFee: Joi.number(),
   });
 
   const result = Joi.validate(ctx.request.body, schema);
@@ -39,6 +40,7 @@ export const write = async ctx => {
     transactionHash,
     typeName,
     klay,
+    TxFee,
   } = ctx.request.body;
 
   const tx = new Tx({
@@ -54,6 +56,7 @@ export const write = async ctx => {
     transactionHash,
     typeName,
     klay,
+    TxFee,
   });
 
   try {

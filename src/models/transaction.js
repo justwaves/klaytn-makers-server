@@ -22,6 +22,7 @@ const TxSchema = new Schema({
   transactionHash: String,
   typeName: String,
   klay: Number,
+  TxFee: Number,
 });
 
 const Tx = mongoose.model("Tx", TxSchema);
