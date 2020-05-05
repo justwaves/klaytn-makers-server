@@ -71,12 +71,10 @@ export const write = async ctx => {
 export const list = async ctx => {
   const { username } = ctx.request.body;
 
-  const query = {
-    ...(username ? { "user.username": username } : {}),
-  };
-
   try {
-    const txList = await Tx.find(query).sort({ _id: -1 }).exec();
+    const txList = await Tx.find({ "user.username": username })
+      .sort({ _id: -1 })
+      .exec();
 
     ctx.body = txList.map(tx => ({
       ...tx,
