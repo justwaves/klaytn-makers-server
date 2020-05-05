@@ -4,7 +4,7 @@ import checkLoggedIn from "../../lib/checkLoggedIn";
 
 const tx = new Router();
 
-tx.get("/", txCtrl.list);
+tx.get("/", checkLoggedIn, txCtrl.list);
 tx.post("/", checkLoggedIn, txCtrl.write);
 // tx.delete("/", checkLoggedIn, txCtrl.checkOwnTx, txCtrl.remove);
 

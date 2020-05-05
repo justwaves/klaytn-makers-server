@@ -69,7 +69,7 @@ export const write = async ctx => {
 
 // 전체 트랜잭션 조회
 export const list = async ctx => {
-  const { username } = ctx.query;
+  const { username } = ctx.request.body;
 
   const query = {
     ...(username ? { "user.username": username } : {}),
