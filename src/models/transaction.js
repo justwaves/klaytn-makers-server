@@ -20,6 +20,8 @@ const TxSchema = new Schema({
   gasPrice: String,
   gasUsed: Number,
   transactionHash: String,
+  typeName: String,
+  klay: Number,
 });
 
 const Tx = mongoose.model("Tx", TxSchema);
