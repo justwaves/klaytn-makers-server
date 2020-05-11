@@ -69,7 +69,7 @@ export const write = async ctx => {
 
 // 전체 트랜잭션 조회
 export const list = async ctx => {
-  const { username } = ctx.request.body;
+  const { username } = ctx.query;
 
   try {
     const txList = await Tx.find({ "user.username": username })
