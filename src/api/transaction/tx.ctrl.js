@@ -19,6 +19,7 @@ export const write = async ctx => {
     typeName: Joi.string(),
     klay: Joi.number(),
     TxFee: Joi.number(),
+    orderDate: Joi.number(),
   });
 
   const result = Joi.validate(ctx.request.body, schema);
@@ -41,6 +42,7 @@ export const write = async ctx => {
     typeName,
     klay,
     TxFee,
+    orderDate,
   } = ctx.request.body;
 
   const tx = new Tx({
@@ -57,6 +59,7 @@ export const write = async ctx => {
     typeName,
     klay,
     TxFee,
+    orderDate,
   });
 
   try {

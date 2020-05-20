@@ -23,6 +23,7 @@ const TxSchema = new Schema({
   typeName: String,
   klay: Number,
   TxFee: Number,
+  orderDate: Number,
 });
 
 const Tx = mongoose.model("Tx", TxSchema);
