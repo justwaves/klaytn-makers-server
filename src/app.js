@@ -28,6 +28,8 @@ mongoose
 const app = new Koa();
 const router = new Router();
 
+app.use(cors());
+
 // api route 적용
 router.use("/api", api.routes());
 
@@ -56,8 +58,6 @@ var corsOptions = {
 app.use((req, res) => {
   res.header("Access-Control-Allow-Origin", "*"); // 모든 도메인
 });
-
-app.use(cors());
 
 const port = PORT || 4000;
 app.listen(port, () => {
