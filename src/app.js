@@ -52,6 +52,10 @@ app.use(async ctx => {
 //   optionsSuccessStatus: 200,
 // };
 
+app.use((req, res) => {
+  res.header("Access-Control-Allow-Origin", "*"); // 모든 도메인
+});
+
 app.use(cors());
 
 const port = PORT || 4000;
