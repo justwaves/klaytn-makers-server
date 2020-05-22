@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import serve from "koa-static";
 import path from "path";
 import send from "koa-send";
+import cors from "cors";
 
 import api from "./api";
 import jwtMiddleware from "./lib/jwtMiddleware";
@@ -45,6 +46,13 @@ app.use(async ctx => {
     await send(ctx, "index.html", { root: buildDirectory });
   }
 });
+
+var corsOptions = {
+  origin: "https://klaytnmakers.netlify.app/",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 const port = PORT || 4000;
 app.listen(port, () => {
