@@ -6,7 +6,8 @@ import mongoose from "mongoose";
 import serve from "koa-static";
 import path from "path";
 import send from "koa-send";
-import cors from "cors";
+// import cors from "cors";
+import cors from "@koa/cors";
 
 import api from "./api";
 import jwtMiddleware from "./lib/jwtMiddleware";
@@ -47,10 +48,10 @@ app.use(async ctx => {
   }
 });
 
-// var corsOptions = {
-//   origin: "https://klaytnmakers.netlify.app/",
-//   optionsSuccessStatus: 200,
-// };
+var corsOptions = {
+  // origin: "https://klaytnmakers.netlify.app/",
+  optionsSuccessStatus: 200,
+};
 
 app.use((req, res) => {
   res.header("Access-Control-Allow-Origin", "*"); // 모든 도메인
