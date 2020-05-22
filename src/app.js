@@ -47,12 +47,12 @@ app.use(async ctx => {
   }
 });
 
-var corsOptions = {
-  origin: "https://klaytnmakers.netlify.app/",
-  optionsSuccessStatus: 200,
-};
+// var corsOptions = {
+//   origin: "https://klaytnmakers.netlify.app/",
+//   optionsSuccessStatus: 200,
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 const port = PORT || 4000;
 app.listen(port, () => {
