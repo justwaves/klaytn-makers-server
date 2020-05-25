@@ -30,7 +30,7 @@ const router = new Router();
 
 // CORS 설정
 var corsOptions = {
-  origin: "https://klaytnmakers.netlify.app/",
+  origin: "https://klaytn-makers-server.herokuapp.com",
   optionsSuccessStatus: 200,
 };
 
