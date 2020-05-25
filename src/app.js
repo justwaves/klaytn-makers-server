@@ -28,7 +28,13 @@ mongoose
 const app = new Koa();
 const router = new Router();
 
-app.use(cors());
+// CORS 설정
+var corsOptions = {
+  origin: "https://klaytnmakers.netlify.app/",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 // api route 적용
 router.use("/api", api.routes());
@@ -48,15 +54,6 @@ app.use(async ctx => {
   if (ctx.status === 404 && ctx.path.indexOf("/api") !== 0) {
     await send(ctx, "index.html", { root: buildDirectory });
   }
-});
-
-var corsOptions = {
-  // origin: "https://klaytnmakers.netlify.app/",
-  optionsSuccessStatus: 200,
-};
-
-app.use((req, res) => {
-  res.header("Access-Control-Allow-Origin", "*"); // 모든 도메인
 });
 
 const port = PORT || 4000;
