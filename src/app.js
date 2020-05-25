@@ -32,6 +32,7 @@ const router = new Router();
 var corsOptions = {
   origin: "https://klaytnmakers.netlify.app",
   optionsSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -54,14 +55,6 @@ app.use(async ctx => {
   if (ctx.status === 404 && ctx.path.indexOf("/api") !== 0) {
     await send(ctx, "index.html", { root: buildDirectory });
   }
-});
-
-app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
 });
 
 const port = PORT || 4000;
