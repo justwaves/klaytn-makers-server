@@ -8,6 +8,7 @@ import path from "path";
 import send from "koa-send";
 // import cors from "cors";
 import cors from "@koa/cors";
+const http = require("http");
 
 import api from "./api";
 import jwtMiddleware from "./lib/jwtMiddleware";
@@ -29,12 +30,11 @@ const app = new Koa();
 const router = new Router();
 
 // CORS 설정
-var corsOptions = {
+const corsOptions = {
   origin: "https://klaytnmakers.netlify.app",
   optionsSuccessStatus: 200,
   credentials: true,
 };
-
 app.use(cors(corsOptions));
 
 // api route 적용
@@ -56,6 +56,11 @@ app.use(async ctx => {
     await send(ctx, "index.html", { root: buildDirectory });
   }
 });
+
+// 20분에 한 번씩 서버 호출
+setInterval(() => {
+  http.get("https://klaytn-makers-server.herokuapp.com");
+}, 1200000);
 
 const port = PORT || 4000;
 app.listen(port, () => {
