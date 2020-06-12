@@ -6,13 +6,10 @@ import mongoose from "mongoose";
 import serve from "koa-static";
 import path from "path";
 import send from "koa-send";
-// import cors from "cors";
 import cors from "@koa/cors";
-const http = require("http");
 
 import api from "./api";
 import jwtMiddleware from "./lib/jwtMiddleware";
-// import createFakeData from "./lib/createFakeData";
 
 const { PORT, MONGODB_URI } = process.env;
 
@@ -20,7 +17,6 @@ mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true, useFindAndModify: false })
   .then(() => {
     console.log("Connected to MongoDB");
-    // createFakeData();
   })
   .catch(e => {
     console.log(e);
@@ -58,9 +54,9 @@ app.use(async ctx => {
 });
 
 // 20분에 한 번씩 서버 호출
-setInterval(() => {
-  http.get("https://klaytn-makers-server.herokuapp.com");
-}, 1200000);
+// setInterval(() => {
+//   http.get("https://klaytn-makers-server.herokuapp.com");
+// }, 1200000);
 
 const port = PORT || 4000;
 app.listen(port, () => {
